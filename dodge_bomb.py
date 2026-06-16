@@ -2,6 +2,7 @@ import os
 import random
 import sys
 import pygame as pg
+import time
 
 
 WIDTH, HEIGHT = 1100, 650
@@ -26,6 +27,20 @@ def check_bound(rct: pg.Rect) -> tuple[bool,bool]:
     if rct.top < 0 or HEIGHT < rct.bottom:
         tate = False
     return yoko,tate
+
+def gameover(screen: pg.Surface) -> None:
+    black = pg.Surface((WIDTH,HEIGHT))
+    pg.draw.rect(black,(0,0,0),(0,0,WIDTH,HEIGHT)) #黒い矩形
+    black.set_alpha(180) #透明度の設定
+    screen.blit(black,[0,0])
+    fonto = pg.font.Font(None,50) #フォントサイズ
+    txt = fonto.render("Game Over",True,(255,255,255)) #白字でGameOver
+    screen.blit(txt,[WIDTH/2-100,HEIGHT/2-75]) #Game Overの画像
+    koukaton = pg.image.load("fig/8.png")
+    screen.blit(koukaton,[WIDTH/2-200,HEIGHT/2-50]) #左のこうかとん
+    screen.blit(koukaton,[WIDTH/2+200,HEIGHT/2-50]) #右のこうかとん
+    pg.display.update()
+    time.sleep(5) #5秒間表示
 
 
 def main():
@@ -52,9 +67,10 @@ def main():
         for event in pg.event.get():
             if event.type == pg.QUIT: 
                 return
-            if kk_rct.colliderect(bb_rct): #こうかとんRectと爆弾Rectが重なったら
-                print("ゲームオーバー")
-                return
+        if kk_rct.colliderect(bb_rct): #こうかとんRectと爆弾Rectが重なったら
+            print("ゲームオーバー")
+            gameover(screen)
+            return
         screen.blit(bg_img, [0, 0]) 
 
         key_lst = pg.key.get_pressed()
