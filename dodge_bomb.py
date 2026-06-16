@@ -41,7 +41,7 @@ def main():
     bb_img = pg.Surface((20,20)) #爆弾用の空のSurface
     pg.draw.circle(bb_img, (255,0,0), (10,10),10) #半径10の赤い円を描画
     bb_img.set_colorkey((0,0,0))
-    bb_rct = kk_img.get_rect()
+    bb_rct = bb_img.get_rect()
     bb_rct.centerx = random.randint(0,WIDTH) #横初期座標
     bb_rct.centery = random.randint(0,HEIGHT) #縦初期座標
     vx,vy = +5,-5
