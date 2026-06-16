@@ -29,6 +29,13 @@ def check_bound(rct: pg.Rect) -> tuple[bool,bool]:
     return yoko,tate
 
 def gameover(screen: pg.Surface) -> None:
+    """
+    こうかとんに爆弾が着弾した際に，
+    画面をブラックアウトし，
+    泣いているこうかとん画像と
+   「Game Over」の文字列を
+    5秒間表示させる関数を実装する
+    """
     black = pg.Surface((WIDTH,HEIGHT))
     pg.draw.rect(black,(0,0,0),(0,0,WIDTH,HEIGHT)) #黒い矩形
     black.set_alpha(180) #透明度の設定
@@ -36,7 +43,7 @@ def gameover(screen: pg.Surface) -> None:
     fonto = pg.font.Font(None,50) #フォントサイズ
     txt = fonto.render("Game Over",True,(255,255,255)) #白字でGameOver
     screen.blit(txt,[WIDTH/2-100,HEIGHT/2-75]) #Game Overの画像
-    koukaton = pg.image.load("fig/8.png")
+    koukaton = pg.image.load("fig/8.png") #こうかとんの画像ロード
     screen.blit(koukaton,[WIDTH/2-200,HEIGHT/2-50]) #左のこうかとん
     screen.blit(koukaton,[WIDTH/2+200,HEIGHT/2-50]) #右のこうかとん
     pg.display.update()
@@ -55,8 +62,8 @@ def main():
     #爆弾の初期化
     bb_img = pg.Surface((20,20)) #爆弾用の空のSurface
     pg.draw.circle(bb_img, (255,0,0), (10,10),10) #半径10の赤い円を描画
-    bb_img.set_colorkey((0,0,0))
-    bb_rct = bb_img.get_rect()
+    bb_img.set_colorkey((0,0,0)) #
+    bb_rct = bb_img.get_rect() 
     bb_rct.centerx = random.randint(0,WIDTH) #横初期座標
     bb_rct.centery = random.randint(0,HEIGHT) #縦初期座標
     vx,vy = +5,-5
